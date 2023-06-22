@@ -7,6 +7,8 @@ migratedown:
 	migrate -path database/migration -database "postgresql://paulodhiambo:37119787@localhost:5432/ecom?sslmode=disable" -verbose down
 sqlcgenerate:
 	sqlc generate
+server:
+	go run main.go
 test:
 	go test -v -cover ./...
-.PHONY: createmigration migrateup migratedown sqlcgenerate test
+.PHONY: createmigration migrateup migratedown sqlcgenerate test server
