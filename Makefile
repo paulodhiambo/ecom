@@ -9,4 +9,4 @@ sqlcgenerate:
 	sqlc generate
 test:
 	go test -v -cover ./...
-.PHONY: createmigration migrateup migratedown sqlcgenerate
+.PHONY: createmigration migrateup migratedown sqlcgenerate test
