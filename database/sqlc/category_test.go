@@ -47,6 +47,17 @@ func TestGetCategories(t *testing.T) {
 	}
 }
 
+func TestUpdateCategory(t *testing.T) {
+	account1 := createRandomCategory(t)
+
+	arg := UpdateCategoryParams{
+		ID:      account1.ID,
+		CatName: util.RandomFullName(),
+	}
+	err := testQueries.UpdateCategory(context.Background(), arg)
+	require.NoError(t, err)
+}
+
 func createRandomCategory(t *testing.T) Category {
 	arg := CreateCategoryParams{
 		CatName: util.RandomString(6),
