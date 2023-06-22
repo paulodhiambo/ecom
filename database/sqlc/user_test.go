@@ -64,13 +64,14 @@ func TestUpdateUser(t *testing.T) {
 }
 
 func createRandomUser(t *testing.T) User {
+	country := createRandomCountry(t)
 	arg := CreateUserParams{
 		ID:          util.RandomInt(1, 2000000),
 		Email:       util.RandomEmail(),
 		Gender:      util.RandomGender(),
 		DateOfBirth: time.Date(2000, 8, 15, 14, 30, 45, 100, time.Local),
 		CreatedAt:   time.Now(),
-		CountryCode: "KE",
+		CountryCode: country.Code,
 		FullName:    util.RandomFullName(),
 	}
 	user, err := testQueries.CreateUser(context.Background(), arg)
