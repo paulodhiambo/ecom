@@ -22,7 +22,7 @@ func TestGetCountry(t *testing.T) {
 }
 
 func TestGetCountries(t *testing.T) {
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 10; i++ {
 		createRandomCountry(t)
 	}
 	arg := ListCountriesParams{

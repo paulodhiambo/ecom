@@ -31,7 +31,7 @@ func TestDeleteCategory(t *testing.T) {
 }
 
 func TestGetCategories(t *testing.T) {
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 10; i++ {
 		createRandomCategory(t)
 	}
 	arg := ListCategoriesParams{

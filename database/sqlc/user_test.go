@@ -26,7 +26,7 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestGetUsers(t *testing.T) {
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 10; i++ {
 		createRandomUser(t)
 	}
 	arg := ListUsersParams{
