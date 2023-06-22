@@ -41,7 +41,6 @@ CREATE TABLE "users"
 CREATE TABLE "merchants"
 (
     "id"            bigserial PRIMARY KEY,
-    "admin_id"      int     NOT NULL,
     "merchant_name" varchar NOT NULL,
     "country_code"  varchar NOT NULL,
     "created_at"    date    NOT NULL,
@@ -79,9 +78,6 @@ ALTER TABLE "products"
 
 ALTER TABLE "users"
     ADD FOREIGN KEY ("country_code") REFERENCES "countries" ("code");
-
-ALTER TABLE "merchants"
-    ADD FOREIGN KEY ("admin_id") REFERENCES "users" ("id");
 
 ALTER TABLE "merchants"
     ADD FOREIGN KEY ("country_code") REFERENCES "countries" ("code");

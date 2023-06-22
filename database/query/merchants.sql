@@ -23,6 +23,6 @@ WHERE id = $1;
 
 
 -- name: CreateMerchant :one
-INSERT INTO merchants(id, admin_id, merchant_name, country_code, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6)
+INSERT INTO merchants(id, merchant_name, country_code, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5)
 RETURNING *;

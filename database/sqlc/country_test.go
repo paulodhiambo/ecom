@@ -39,10 +39,10 @@ func TestGetCountries(t *testing.T) {
 }
 
 func TestDeleteCountry(t *testing.T) {
-	country := createRandomCategory(t)
-	err := testQueries.DeleteUser(context.Background(), country.ID)
+	country := createRandomCountry(t)
+	err := testQueries.DeleteCountry(context.Background(), country.Code)
 	require.NoError(t, err)
-	country2, err := testQueries.GetUser(context.Background(), country.ID)
+	country2, err := testQueries.GetCountry(context.Background(), country.Code)
 	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, country2)
@@ -61,7 +61,7 @@ func TestUpdateCountry(t *testing.T) {
 
 func createRandomCountry(t *testing.T) Country {
 	arg := CreateCountryParams{
-		Code:          util.RandomString(2),
+		Code:          util.RandomString(6),
 		Name:          util.RandomString(6),
 		ContinentName: util.RandomString(5),
 	}

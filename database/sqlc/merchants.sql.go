@@ -11,14 +11,13 @@ import (
 )
 
 const createMerchant = `-- name: CreateMerchant :one
-INSERT INTO merchants(id, admin_id, merchant_name, country_code, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6)
-RETURNING id, admin_id, merchant_name, country_code, created_at, updated_at
+INSERT INTO merchants(id, merchant_name, country_code, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5)
+RETURNING id, merchant_name, country_code, created_at, updated_at
 `
 
 type CreateMerchantParams struct {
 	ID           int64     `json:"id"`
-	AdminID      int32     `json:"admin_id"`
 	MerchantName string    `json:"merchant_name"`
 	CountryCode  string    `json:"country_code"`
 	CreatedAt    time.Time `json:"created_at"`
@@ -28,7 +27,6 @@ type CreateMerchantParams struct {
 func (q *Queries) CreateMerchant(ctx context.Context, arg CreateMerchantParams) (Merchant, error) {
 	row := q.db.QueryRowContext(ctx, createMerchant,
 		arg.ID,
-		arg.AdminID,
 		arg.MerchantName,
 		arg.CountryCode,
 		arg.CreatedAt,
@@ -37,7 +35,6 @@ func (q *Queries) CreateMerchant(ctx context.Context, arg CreateMerchantParams) 
 	var i Merchant
 	err := row.Scan(
 		&i.ID,
-		&i.AdminID,
 		&i.MerchantName,
 		&i.CountryCode,
 		&i.CreatedAt,
@@ -58,7 +55,7 @@ func (q *Queries) DeleteMerchant(ctx context.Context, id int64) error {
 }
 
 const getMerchant = `-- name: GetMerchant :one
-SELECT id, admin_id, merchant_name, country_code, created_at, updated_at
+SELECT id, merchant_name, country_code, created_at, updated_at
 FROM merchants
 WHERE id = $1
 LIMIT 1
@@ -69,7 +66,6 @@ func (q *Queries) GetMerchant(ctx context.Context, id int64) (Merchant, error) {
 	var i Merchant
 	err := row.Scan(
 		&i.ID,
-		&i.AdminID,
 		&i.MerchantName,
 		&i.CountryCode,
 		&i.CreatedAt,
@@ -79,7 +75,7 @@ func (q *Queries) GetMerchant(ctx context.Context, id int64) (Merchant, error) {
 }
 
 const listMerchants = `-- name: ListMerchants :many
-SELECT id, admin_id, merchant_name, country_code, created_at, updated_at
+SELECT id, merchant_name, country_code, created_at, updated_at
 FROM merchants
 ORDER BY id
 LIMIT $1 OFFSET $2
@@ -101,7 +97,6 @@ func (q *Queries) ListMerchants(ctx context.Context, arg ListMerchantsParams) ([
 		var i Merchant
 		if err := rows.Scan(
 			&i.ID,
-			&i.AdminID,
 			&i.MerchantName,
 			&i.CountryCode,
 			&i.CreatedAt,
@@ -124,7 +119,7 @@ const updateMerchant = `-- name: UpdateMerchant :exec
 UPDATE merchants
 SET merchant_name = $2
 WHERE id = $1
-RETURNING id, admin_id, merchant_name, country_code, created_at, updated_at
+RETURNING id, merchant_name, country_code, created_at, updated_at
 `
 
 type UpdateMerchantParams struct {

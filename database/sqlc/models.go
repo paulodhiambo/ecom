@@ -21,7 +21,6 @@ type Country struct {
 
 type Merchant struct {
 	ID           int64     `json:"id"`
-	AdminID      int32     `json:"admin_id"`
 	MerchantName string    `json:"merchant_name"`
 	CountryCode  string    `json:"country_code"`
 	CreatedAt    time.Time `json:"created_at"`

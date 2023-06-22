@@ -22,9 +22,9 @@ func TestGetCategory(t *testing.T) {
 
 func TestDeleteCategory(t *testing.T) {
 	category := createRandomCategory(t)
-	err := testQueries.DeleteUser(context.Background(), category.ID)
+	err := testQueries.DeleteCategory(context.Background(), category.ID)
 	require.NoError(t, err)
-	category2, err := testQueries.GetUser(context.Background(), category.ID)
+	category2, err := testQueries.GetCategory(context.Background(), category.ID)
 	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, category2)

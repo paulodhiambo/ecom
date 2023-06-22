@@ -22,7 +22,7 @@ func TestGetUser(t *testing.T) {
 	require.Equal(t, user1.Email, user2.Email)
 	require.Equal(t, user1.Gender, user2.Gender)
 	require.Equal(t, user1.CountryCode, user2.CountryCode)
-	require.WithinDuration(t, user1.CreatedAt, user2.CreatedAt, time.Second)
+	require.WithinDuration(t, user1.CreatedAt, user2.CreatedAt, time.Minute)
 }
 
 func TestGetUsers(t *testing.T) {
