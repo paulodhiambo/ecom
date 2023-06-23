@@ -71,7 +71,7 @@ func (q *Queries) ListCountries(ctx context.Context, arg ListCountriesParams) ([
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Country
+	items := []Country{}
 	for rows.Next() {
 		var i Country
 		if err := rows.Scan(&i.Code, &i.Name, &i.ContinentName); err != nil {

@@ -71,7 +71,7 @@ func (q *Queries) ListOrderItems(ctx context.Context, arg ListOrderItemsParams) 
 		return nil, err
 	}
 	defer rows.Close()
-	var items []OrderItem
+	items := []OrderItem{}
 	for rows.Next() {
 		var i OrderItem
 		if err := rows.Scan(&i.OrderID, &i.ProductID, &i.Quantity); err != nil {

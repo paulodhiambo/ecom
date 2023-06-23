@@ -1,6 +1,7 @@
 package api
 
 import (
+	"database/sql"
 	database "ecom/database/sqlc"
 	"ecom/database/util"
 	"ecom/models"
@@ -33,6 +34,46 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, account)
+}
+
+func (server *Server) getUser(ctx *gin.Context) {
+	var req models.GetUserRequest
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	account, err := server.store.GetUser(ctx, req.ID)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			ctx.JSON(http.StatusNotFound, errorResponse(err))
+			return
+		}
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, account)
+}
+
+func (server *Server) listAccount(ctx *gin.Context) {
+	var req models.ListUserRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	arg := database.ListUsersParams{
+		Limit:  req.PageSize,
+		Offset: (req.PageID - 1) * req.PageSize,
+	}
+
+	accounts, err := server.store.ListUsers(ctx, arg)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, accounts)
 }
 
 func errorResponse(err error) gin.H {
